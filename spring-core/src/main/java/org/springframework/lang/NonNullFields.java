@@ -28,11 +28,16 @@ import javax.annotation.meta.TypeQualifierDefault;
  * A common Spring annotation to declare that fields are to be considered as
  * non-nullable by default for a given package.
  *
+ * 一个常见的Spring注释，用于声明默认情况下对于给定包，字段将被视为不可为空
+ *
  * <p>Leverages JSR-305 meta-annotations to indicate nullability in Java to common
  * tools with JSR-305 support and used by Kotlin to infer nullability of Spring API.
  *
+ * 利用JSR-305元注释来指示Java中的可空性，以及支持JSR-305的常用工具，并由Kotlin用于推断Spring API的可空性
+ *
  * <p>Should be used at package level in association with {@link Nullable}
  * annotations at field level.
+ * 应该在包级别使用与Nullable注释相关联的字段级别
  *
  * @author Sebastien Deleuze
  * @since 5.0

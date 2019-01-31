@@ -26,6 +26,8 @@ import org.springframework.lang.Nullable;
  * MVC View for a web interaction. Implementations are responsible for rendering
  * content, and exposing the model. A single view exposes multiple model attributes.
  *
+ * Web交互时的视图（MVC中的View）。 接口的实现负责呈现内容并公开模型，单个视图可以暴露多个模型属性。
+ *
  * <p>This class and the MVC approach associated with it is discussed in Chapter 12 of
  * <a href="http://www.amazon.com/exec/obidos/tg/detail/-/0764543857/">Expert One-On-One J2EE Design and Development</a>
  * by Rod Johnson (Wrox, 2002).

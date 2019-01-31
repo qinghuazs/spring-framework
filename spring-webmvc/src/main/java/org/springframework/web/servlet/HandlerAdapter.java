@@ -63,13 +63,13 @@ public interface HandlerAdapter {
 	boolean supports(Object handler);
 
 	/**
+	 *
+	 * 处理器功能处理方法的调用，HandlerAdapter 将会根据适配的结果调用真正的处理器的功能处理方法，完成功能处理；并返回一个 ModelAndView 对象（包含模型数据、逻辑视图名）
 	 * Use the given handler to handle this request.
 	 * The workflow that is required may vary widely.
-	 * @param request current HTTP request
-	 * @param response current HTTP response
-	 * @param handler handler to use. This object must have previously been passed
-	 * to the {@code supports} method of this interface, which must have
-	 * returned {@code true}.
+	 * @param request 当前的HTTP请求
+	 * @param response 当前的HTTP响应
+	 * @param handler 真正的处理器，必须满足supports(Object handler)返回true
 	 * @throws Exception in case of errors
 	 * @return a ModelAndView object with the name of the view and the required
 	 * model data, or {@code null} if the request has been handled directly

@@ -157,6 +157,8 @@ import org.springframework.web.util.WebUtils;
  * @see org.springframework.web.HttpRequestHandler
  * @see org.springframework.web.servlet.mvc.Controller
  * @see org.springframework.web.context.ContextLoaderListener
+ *
+ * SpringMVC框架中的前端控制器
  */
 @SuppressWarnings("serial")
 public class DispatcherServlet extends FrameworkServlet {
@@ -326,7 +328,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	@Nullable
 	private List<HandlerMapping> handlerMappings;
 
-	/** List of HandlerAdapters used by this servlet. */
+	/** HandlerAdapter列表 */
 	@Nullable
 	private List<HandlerAdapter> handlerAdapters;
 
@@ -624,9 +626,8 @@ public class DispatcherServlet extends FrameworkServlet {
 	}
 
 	/**
-	 * Initialize the HandlerAdapters used by this class.
-	 * <p>If no HandlerAdapter beans are defined in the BeanFactory for this namespace,
-	 * we default to SimpleControllerHandlerAdapter.
+	 * 初始化HandlerAdapters
+	 * 如果BeanFactory中没有为此命名空间定义HandlerAdapter的bean对象，则默认使用SimpleControllerHandlerAdapter
 	 */
 	private void initHandlerAdapters(ApplicationContext context) {
 		this.handlerAdapters = null;

@@ -26,6 +26,8 @@ import java.lang.annotation.Target;
  * Indicates that the annotated element uses Java 7 specific API constructs,
  * without implying that it strictly requires Java 7.
  *
+ * 表示带注释的元素使用Java 7特定的API构造，而不暗示它严格要求Java 7。
+ *
  * @author Stephane Nicoll
  * @since 4.1
  * @deprecated as of 5.0 since the framework is based on Java 8+ now

@@ -36,8 +36,12 @@ import org.springframework.lang.Nullable;
  * JSP-based. Other implementations might be XSLT-based, or use an HTML generation library.
  * This interface is designed to avoid restricting the range of possible implementations.
  *
+ * 视图实现可能有很大不同。 一个明显的实现是基于JSP的。 其他实现可能是基于XSLT的，或使用HTML生成库。 此接口旨在避免限制可能的实现范围。
+ *
  * <p>Views should be beans. They are likely to be instantiated as beans by a ViewResolver.
  * As this interface is stateless, view implementations should be thread-safe.
+ *
+ * 视图应该是bean。 它们很可能被ViewResolver实例化为bean。 由于此接口是无状态的，因此视图实现应该是线程安全的。
  *
  * @author Rod Johnson
  * @author Arjen Poutsma

@@ -36,7 +36,8 @@ import org.springframework.lang.Nullable;
  * JSP-based. Other implementations might be XSLT-based, or use an HTML generation library.
  * This interface is designed to avoid restricting the range of possible implementations.
  *
- * 视图实现可能有很大不同。 一个明显的实现是基于JSP的。 其他实现可能是基于XSLT的，或使用HTML生成库。 此接口旨在避免限制可能的实现范围。
+ * 视图实现可能有很大不同。 一个明显的实现是基于JSP的。 其他实现可能是基于XSLT的，或使用HTML生成库。
+ * 此接口旨在避免限制可能的实现范围。
  *
  * <p>Views should be beans. They are likely to be instantiated as beans by a ViewResolver.
  * As this interface is stateless, view implementations should be thread-safe.
@@ -53,16 +54,23 @@ public interface View {
 
 	/**
 	 * Name of the {@link HttpServletRequest} attribute that contains the response status code.
+	 * 包含响应状态代码的{@link HttpServletRequest}属性的名称。
 	 * <p>Note: This attribute is not required to be supported by all View implementations.
+	 * 注意：此属性对于所有View实现来说并不是必须的。
 	 * @since 3.0
 	 */
 	String RESPONSE_STATUS_ATTRIBUTE = View.class.getName() + ".responseStatus";
 
 	/**
 	 * Name of the {@link HttpServletRequest} attribute that contains a Map with path variables.
+	 * 包含带路径变量的Map的{@link HttpServletRequest}属性的名称。
+	 *
 	 * The map consists of String-based URI template variable names as keys and their corresponding
 	 * Object-based values -- extracted from segments of the URL and type converted.
+	 * 该map包含基于字符串的URI模板变量名称作为键及其对应的基于对象的值 - 从URL的段和转换后的类型中提取。
+	 *
 	 * <p>Note: This attribute is not required to be supported by all View implementations.
+	 * 注意：此属性对于所有View实现来说并不是必须的。
 	 * @since 3.1
 	 */
 	String PATH_VARIABLES = View.class.getName() + ".pathVariables";
@@ -71,6 +79,9 @@ public interface View {
 	 * The {@link org.springframework.http.MediaType} selected during content negotiation,
 	 * which may be more specific than the one the View is configured with. For example:
 	 * "application/vnd.example-v1+xml" vs "application/*+xml".
+	 *
+	 * 在内容协商期间选择的{@link org.springframework.http.MediaType}，可能比View配置的更具体。
+	 * 例如：“application/vnd.example-v1+xml” vs “application/*+xml”。
 	 * @since 3.2
 	 */
 	String SELECTED_CONTENT_TYPE = View.class.getName() + ".selectedContentType";
@@ -78,10 +89,15 @@ public interface View {
 
 	/**
 	 * Return the content type of the view, if predetermined.
+	 * 如果预定，则返回视图的内容类型。
+	 *
 	 * <p>Can be used to check the view's content type upfront,
 	 * i.e. before an actual rendering attempt.
+	 * 可用于预先检查视图的内容类型，比如，在实际渲染尝试之前。
+	 *
 	 * @return the content type String (optionally including a character set),
 	 * or {@code null} if not predetermined
+	 * 内容类型字符串（可选地包括字符集），如果没有预定，则为{@code null}
 	 */
 	@Nullable
 	default String getContentType() {
@@ -89,12 +105,17 @@ public interface View {
 	}
 
 	/**
+	 * render 给予
 	 * Render the view given the specified model.
+	 * 给定指定模型的视图。
 	 * <p>The first step will be preparing the request: In the JSP case, this would mean
 	 * setting model objects as request attributes. The second step will be the actual
 	 * rendering of the view, for example including the JSP via a RequestDispatcher.
+	 * 第一步是准备请求：在JSP情况下，这意味着将模型对象设置为请求属性。
+	 * 第二步是视图的实际呈现，例如通过RequestDispatcher包含JSP。
 	 * @param model a Map with name Strings as keys and corresponding model
 	 * objects as values (Map can also be {@code null} in case of empty model)
+	 *              一个key为字符串的Map，相应的模型对象作为值（如果是空模型，映射也可以是{@code null}）
 	 * @param request current HTTP request
 	 * @param response he HTTP response we are building
 	 * @throws Exception if rendering failed

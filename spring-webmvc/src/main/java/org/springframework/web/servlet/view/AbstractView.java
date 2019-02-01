@@ -45,14 +45,17 @@ import org.springframework.web.servlet.support.RequestContext;
  * Abstract base class for {@link org.springframework.web.servlet.View}
  * implementations. Subclasses should be JavaBeans, to allow for
  * convenient configuration as Spring-managed bean instances.
+ * {@link org.springframework.web.servlet.View}实现的抽象基类。 子类应该是JavaBeans，以便于配置为Spring管理的bean实例。
  *
  * <p>Provides support for static attributes, to be made available to the view,
  * with a variety of ways to specify them. Static attributes will be merged
  * with the given dynamic attributes (the model that the controller returned)
  * for each render operation.
+ * 通过各种方式指定静态属性，为视图提供静态属性支持。 静态属性将与每个渲染操作的给定动态属性（控制器返回的模型）合并。
  *
  * <p>Extends {@link WebApplicationObjectSupport}, which will be helpful to
  * some views. Subclasses just need to implement the actual rendering.
+ * 继承{@link WebApplicationObjectSupport}，这对某些视图很有帮助。 子类只需要实现实际渲染。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -62,10 +65,13 @@ import org.springframework.web.servlet.support.RequestContext;
  */
 public abstract class AbstractView extends WebApplicationObjectSupport implements View, BeanNameAware {
 
-	/** Default content type. Overridable as bean property. */
+	/** 默认Content-Type。 作为bean属性可覆盖*/
 	public static final String DEFAULT_CONTENT_TYPE = "text/html;charset=ISO-8859-1";
 
-	/** Initial size for the temporary output byte array (if any). */
+	/**
+	 * Initial size for the temporary output byte array (if any).
+	 * 临时输出字节数组的初始大小（如果有）。
+	 */
 	private static final int OUTPUT_BYTE_ARRAY_INITIAL_SIZE = 4096;
 
 
@@ -288,6 +294,7 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 	/**
 	 * Return the view's name. Should never be {@code null},
 	 * if the view was correctly configured.
+	 * 返回视图的名称。 如果视图配置正确，则永远不应该是{@code null}。
 	 */
 	@Nullable
 	public String getBeanName() {
@@ -480,6 +487,7 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 	 * {@link #setContentType(String) content type} unless the
 	 * {@link View#SELECTED_CONTENT_TYPE} request attribute is present and set
 	 * to a concrete media type.
+	 * 将响应的内容类型设置为已配置的{@link #setContentType(String) 内容类型}，除非存在{@link View＃SELECTED_CONTENT_TYPE}请求属性并将其设置为具体媒体类型。
 	 */
 	protected void setResponseContentType(HttpServletRequest request, HttpServletResponse response) {
 		MediaType mediaType = (MediaType) request.getAttribute(View.SELECTED_CONTENT_TYPE);
@@ -496,6 +504,10 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 		return getClass().getName() + ": " + formatViewName();
 	}
 
+	/**
+	 * 格式化视图名称
+	 * @return
+	 */
 	protected String formatViewName() {
 		return (getBeanName() != null ? "name '" + getBeanName() + "'" : "[" + getClass().getSimpleName() + "]");
 	}

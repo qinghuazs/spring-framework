@@ -32,16 +32,30 @@ import java.util.TreeSet;
 import org.springframework.lang.Nullable;
 
 /**
+ * MIME，Multipurpose Internet Mail Extensions, 多用途互联网邮件扩展
+ * MIME是一个互联网标准，它扩展了电子邮件标准，使其能够支持
+ * - 非ASCII字符文本；
+ * - 非文本格式附件（二进制、声音、图像等）；
+ * - 由多部分（multiple parts）组成的消息体；
+ * - 包含非ASCII字符的头信息（Header information）
+ * 此外，在万维网中使用的HTTP协议中也使用了MIME的框架，
+ * 标准被扩展为<a href="https://zh.wikipedia.org/wiki/%E4%BA%92%E8%81%94%E7%BD%91%E5%AA%92%E4%BD%93%E7%B1%BB%E5%9E%8B">互联网媒体类型</>
+ *
  * Represents a MIME Type, as originally defined in RFC 2046 and subsequently
  * used in other Internet protocols including HTTP.
+ * 表示MIME类型，最初在RFC 2046中定义，随后用于其他Internet协议（包括HTTP）。
  *
  * <p>This class, however, does not contain support for the q-parameters used
  * in HTTP content negotiation. Those can be found in the subclass
  * {@code org.springframework.http.MediaType} in the {@code spring-web} module.
+ * 但是，此类不包含对HTTP内容协商中使用的q-parameters的支持。 这些可以在{@code spring-web}模块的子类{@code org.springframework.http.MediaType}中找到。
  *
  * <p>Consists of a {@linkplain #getType() type} and a {@linkplain #getSubtype() subtype}.
  * Also has functionality to parse MIME Type values from a {@code String} using
  * {@link #valueOf(String)}. For more parsing options see {@link MimeTypeUtils}.
+ * 由{@linkplain #getType() 类型}和{@linkplain #getSubtype() 子类型组成。
+ * 还具有使用{@link #valueOf(String)}从{@code String}解析MIME类型值的功能。
+ * 有关更多解析选项，请参阅{@link MimeTypeUtils}。
  *
  * @author Arjen Poutsma
  * @author Juergen Hoeller
@@ -49,14 +63,23 @@ import org.springframework.lang.Nullable;
  * @author Sam Brannen
  * @since 4.0
  * @see MimeTypeUtils
+ * @see <a href="https://zh.wikipedia.org/wiki/%E5%A4%9A%E7%94%A8%E9%80%94%E4%BA%92%E8%81%AF%E7%B6%B2%E9%83%B5%E4%BB%B6%E6%93%B4%E5%B1%95">MIME 多用途互联网邮件扩展</>
+ * @see <a href="https://tools.ietf.org/html/rfc2046">RFC 2046</a>
  */
 public class MimeType implements Comparable<MimeType>, Serializable {
 
 	private static final long serialVersionUID = 4085923477777865903L;
 
-
+	/**
+	 * wildcard 通配符
+	 * 通配符类型
+	 */
 	protected static final String WILDCARD_TYPE = "*";
 
+	/**
+	 * charset 字符集
+	 * 参数的字符集
+	 */
 	private static final String PARAM_CHARSET = "charset";
 
 	private static final BitSet TOKEN;
@@ -96,42 +119,52 @@ public class MimeType implements Comparable<MimeType>, Serializable {
 		TOKEN.andNot(separators);
 	}
 
-
+	/**
+	 * Content-Type的类型
+	 */
 	private final String type;
 
+	/**
+	 * Content-Type的子类型
+	 */
 	private final String subtype;
 
+	/**
+	 * 参数类型
+	 */
 	private final Map<String, String> parameters;
 
 
 	/**
 	 * Create a new {@code MimeType} for the given primary type.
+	 * 为给定的主要类型创建一个新的{@code MimeType}。
 	 * <p>The {@linkplain #getSubtype() subtype} is set to <code>"&#42;"</code>,
 	 * and the parameters are empty.
+	 * {@linkplain #getSubtype() 子类型} 设置为<code>“*”</ code>，参数为空。
 	 * @param type the primary type
-	 * @throws IllegalArgumentException if any of the parameters contains illegal characters
+	 * @throws IllegalArgumentException 如果任一参数包含非法字符
 	 */
 	public MimeType(String type) {
 		this(type, WILDCARD_TYPE);
 	}
 
 	/**
-	 * Create a new {@code MimeType} for the given primary type and subtype.
-	 * <p>The parameters are empty.
-	 * @param type the primary type
-	 * @param subtype the subtype
-	 * @throws IllegalArgumentException if any of the parameters contains illegal characters
+	 * 为给定的主要类型和子类型创建新的{@code MimeType}。
+	 * <p>参数为空
+	 * @param type 主类型
+	 * @param subtype 子类型
+	 * @throws IllegalArgumentException 如果任一参数包含非法字符
 	 */
 	public MimeType(String type, String subtype) {
 		this(type, subtype, Collections.emptyMap());
 	}
 
 	/**
-	 * Create a new {@code MimeType} for the given type, subtype, and character set.
-	 * @param type the primary type
-	 * @param subtype the subtype
-	 * @param charset the character set
-	 * @throws IllegalArgumentException if any of the parameters contains illegal characters
+	 * 为给定的类型，子类型和字符集创建新的{@code MimeType}。
+	 * @param type 主类型
+	 * @param subtype 子类型
+	 * @param charset 字符集
+	 * @throws IllegalArgumentException 如果任一参数包含非法字符
 	 */
 	public MimeType(String type, String subtype, Charset charset) {
 		this(type, subtype, Collections.singletonMap(PARAM_CHARSET, charset.name()));
@@ -140,9 +173,11 @@ public class MimeType implements Comparable<MimeType>, Serializable {
 	/**
 	 * Copy-constructor that copies the type, subtype, parameters of the given {@code MimeType},
 	 * and allows to set the specified character set.
-	 * @param other the other MimeType
-	 * @param charset the character set
-	 * @throws IllegalArgumentException if any of the parameters contains illegal characters
+	 * 复制构造函数，复制给定{@code MimeType}的类型，子类型和参数，并允许设置指定的字符集。
+	 *
+	 * @param other 给定的MimeType
+	 * @param charset 字符集
+	 * @throws IllegalArgumentException 如果任一参数包含非法字符
 	 * @since 4.3
 	 */
 	public MimeType(MimeType other, Charset charset) {
@@ -152,20 +187,22 @@ public class MimeType implements Comparable<MimeType>, Serializable {
 	/**
 	 * Copy-constructor that copies the type and subtype of the given {@code MimeType},
 	 * and allows for different parameter.
-	 * @param other the other MimeType
-	 * @param parameters the parameters (may be {@code null})
-	 * @throws IllegalArgumentException if any of the parameters contains illegal characters
+	 * 复制构造函数，复制给定{@code MimeType}的类型和子类型，并允许不同的参数。
+	 *
+	 * @param other 给定的MimeType
+	 * @param parameters 参数（可能是{@code null}）
+	 * @throws IllegalArgumentException 如果任一参数包含非法字符
 	 */
 	public MimeType(MimeType other, @Nullable Map<String, String> parameters) {
 		this(other.getType(), other.getSubtype(), parameters);
 	}
 
 	/**
-	 * Create a new {@code MimeType} for the given type, subtype, and parameters.
-	 * @param type the primary type
-	 * @param subtype the subtype
-	 * @param parameters the parameters (may be {@code null})
-	 * @throws IllegalArgumentException if any of the parameters contains illegal characters
+	 * 为给定的类型，子类型和参数创建一个新的{@code MimeType}。
+	 * @param type 主类型
+	 * @param subtype 子类型
+	 * @param parameters 参数（可能是{@code null}）
+	 * @throws IllegalArgumentException 如果任一参数包含非法字符
 	 */
 	public MimeType(String type, String subtype, @Nullable Map<String, String> parameters) {
 		Assert.hasLength(type, "'type' must not be empty");

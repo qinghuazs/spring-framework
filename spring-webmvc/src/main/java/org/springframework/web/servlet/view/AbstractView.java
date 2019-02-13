@@ -81,25 +81,40 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 	@Nullable
 	private String requestContextAttribute;
 
+	/**
+	 * 静态属性
+	 */
 	private final Map<String, Object> staticAttributes = new LinkedHashMap<>();
 
+	/**
+	 * 是否暴露路径参数
+	 */
 	private boolean exposePathVariables = true;
 
+	/**
+	 *
+	 */
 	private boolean exposeContextBeansAsAttributes = false;
 
+	/**
+	 * 对外暴露的bean名称
+	 */
 	@Nullable
 	private Set<String> exposedContextBeanNames;
 
+	/**
+	 * bean名称
+	 */
 	@Nullable
 	private String beanName;
-
-
 
 	/**
 	 * Set the content type for this view.
 	 * Default is "text/html;charset=ISO-8859-1".
-	 * <p>May be ignored by subclasses if the view itself is assumed
-	 * to set the content type, e.g. in case of JSPs.
+	 * <p>May be ignored by subclasses if the view itself is assumed to set the content type, e.g. in case of JSPs.
+	 *
+	 * 设置此视图的内容类型，默认值为{@link #DEFAULT_CONTENT_TYPE}，即"text/html;charset=ISO-8859-1"
+	 * 如果假定视图本身设置内容类型，则子类可以忽略，例如，在JSP的情况下。
 	 */
 	public void setContentType(@Nullable String contentType) {
 		this.contentType = contentType;
@@ -107,6 +122,7 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 
 	/**
 	 * Return the content type for this view.
+	 * 返回此视图的内容类型
 	 */
 	@Override
 	@Nullable
@@ -117,6 +133,7 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 	/**
 	 * Set the name of the RequestContext attribute for this view.
 	 * Default is none.
+	 * 为此视图设置RequestContext属性的名称，默认为none
 	 */
 	public void setRequestContextAttribute(@Nullable String requestContextAttribute) {
 		this.requestContextAttribute = requestContextAttribute;
@@ -124,6 +141,7 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 
 	/**
 	 * Return the name of the RequestContext attribute, if any.
+	 * 返回RequestContext属性的名称（如果有）
 	 */
 	@Nullable
 	public String getRequestContextAttribute() {
@@ -133,47 +151,59 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 	/**
 	 * Set static attributes as a CSV string.
 	 * Format is: attname0={value1},attname1={value1}
-	 * <p>"Static" attributes are fixed attributes that are specified in
-	 * the View instance configuration. "Dynamic" attributes, on the other hand,
-	 * are values passed in as part of the model.
+	 * <p>"Static" attributes are fixed attributes that are specified in the View instance configuration.
+	 * "Dynamic" attributes, on the other hand, are values passed in as part of the model.
+	 *
+	 * 将静态属性设置为CSV字符串，格式为：attname0 = {value1}，attname1 = {value1}
+	 * “静态”属性是在View实例配置中指定的固定属性，“动态”属性是作为模型的一部分传入的值。
 	 */
 	public void setAttributesCSV(@Nullable String propString) throws IllegalArgumentException {
 		if (propString != null) {
+			// StringTokenizer 是出于兼容性的原因而被保留的遗留类（虽然在新代码中并不鼓励使用它）。
+			// 建议所有寻求此功能的人使用 String 的 split 方法或 java.util.regex 包。
 			StringTokenizer st = new StringTokenizer(propString, ",");
+			//遍历propString中的属性
 			while (st.hasMoreTokens()) {
 				String tok = st.nextToken();
 				int eqIdx = tok.indexOf('=');
+				//格式不正确
 				if (eqIdx == -1) {
 					throw new IllegalArgumentException(
 							"Expected '=' in attributes CSV string '" + propString + "'");
 				}
+				//是否包含“{}”,属性可以为空，但是要符合attname0={value1}的格式
 				if (eqIdx >= tok.length() - 2) {
 					throw new IllegalArgumentException(
 							"At least 2 characters ([]) required in attributes CSV string '" + propString + "'");
 				}
+				//获取key和value，value还带有大括号
 				String name = tok.substring(0, eqIdx);
 				String value = tok.substring(eqIdx + 1);
 
-				// Delete first and last characters of value: { and }
+				// 删除value中的大括号
 				value = value.substring(1);
 				value = value.substring(0, value.length() - 1);
 
+				//静态数据添加到视图中，在每个视图中公开
 				addStaticAttribute(name, value);
 			}
 		}
 	}
 
 	/**
-	 * Set static attributes for this view from a
-	 * {@code java.util.Properties} object.
+	 * Set static attributes for this view from a {@code java.util.Properties} object.
+	 * 通过{@code java.util.Properties}对象设置此视图的静态属性。
 	 * <p>"Static" attributes are fixed attributes that are specified in
 	 * the View instance configuration. "Dynamic" attributes, on the other hand,
 	 * are values passed in as part of the model.
+	 * “静态”属性是在View实例配置中指定的固定属性，“动态”属性是作为模型的一部分传入的值。
 	 * <p>This is the most convenient way to set static attributes. Note that
 	 * static attributes can be overridden by dynamic attributes, if a value
 	 * with the same name is included in the model.
+	 * 这是设置静态属性最方便的方法。 请注意，如果模型中包含具有相同名称的值，则静态属性可以被动态属性覆盖。
 	 * <p>Can be populated with a String "value" (parsed via PropertiesEditor)
 	 * or a "props" element in XML bean definitions.
+	 * 可以使用String“value”（通过PropertiesEditor解析）或XML bean定义中的“props”元素填充。
 	 * @see org.springframework.beans.propertyeditors.PropertiesEditor
 	 */
 	public void setAttributes(Properties attributes) {
@@ -181,12 +211,15 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 	}
 
 	/**
-	 * Set static attributes for this view from a Map. This allows to set
-	 * any kind of attribute values, for example bean references.
+	 * Set static attributes for this view from a Map.
+	 * This allows to set any kind of attribute values, for example bean references.
+	 * 通过Map设置此视图的静态属性，这种方式允许设置任何类型的属性值，例如bean引用。
 	 * <p>"Static" attributes are fixed attributes that are specified in
 	 * the View instance configuration. "Dynamic" attributes, on the other hand,
 	 * are values passed in as part of the model.
+	 *
 	 * <p>Can be populated with a "map" or "props" element in XML bean definitions.
+	 * 可以在XML bean定义中使用“map”或“props”元素填充。
 	 * @param attributes a Map with name Strings as keys and attribute objects as values
 	 */
 	public void setAttributesMap(@Nullable Map<String, ?> attributes) {
@@ -208,12 +241,15 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 
 	/**
 	 * Add static data to this view, exposed in each view.
+	 * 将静态数据添加到此视图，在每个视图中公开。
 	 * <p>"Static" attributes are fixed attributes that are specified in
 	 * the View instance configuration. "Dynamic" attributes, on the other hand,
 	 * are values passed in as part of the model.
+	 * “静态”属性是在View实例配置中指定的固定属性，“动态”属性是作为模型的一部分传入的值。
 	 * <p>Must be invoked before any calls to {@code render}.
-	 * @param name the name of the attribute to expose
-	 * @param value the attribute value to expose
+	 * 必须在调用render方法之前调用
+	 * @param name the name of the attribute to expose 要公开的属性的名称
+	 * @param value the attribute value to expose 要公开的属性值
 	 * @see #render
 	 */
 	public void addStaticAttribute(String name, Object value) {
@@ -487,7 +523,7 @@ public abstract class AbstractView extends WebApplicationObjectSupport implement
 	 * {@link #setContentType(String) content type} unless the
 	 * {@link View#SELECTED_CONTENT_TYPE} request attribute is present and set
 	 * to a concrete media type.
-	 * 将响应的内容类型设置为已配置的{@link #setContentType(String) 内容类型}，除非存在{@link View＃SELECTED_CONTENT_TYPE}请求属性并将其设置为具体媒体类型。
+	 * 将响应的内容类型设置为已配置的{@link #setContentType(String) 内容类型}，除非存在{@link View#SELECTED_CONTENT_TYPE}请求属性并将其设置为具体媒体类型。
 	 */
 	protected void setResponseContentType(HttpServletRequest request, HttpServletResponse response) {
 		MediaType mediaType = (MediaType) request.getAttribute(View.SELECTED_CONTENT_TYPE);

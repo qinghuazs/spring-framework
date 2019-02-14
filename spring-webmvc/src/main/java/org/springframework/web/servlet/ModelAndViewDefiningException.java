@@ -21,8 +21,8 @@ import javax.servlet.ServletException;
 import org.springframework.util.Assert;
 
 /**
- * Exception to be thrown on error conditions that should forward
- * to a specific view with a specific model.
+ * Exception to be thrown on error conditions that should forward to a specific view with a specific model.
+ * 异常应该转发到应该转发到特定模型的特定视图的错误条件。
  *
  * <p>Can be thrown at any time during handler processing.
  * This includes any template methods of pre-built controllers.
@@ -50,6 +50,8 @@ public class ModelAndViewDefiningException extends ServletException {
 
 	/**
 	 * Return the ModelAndView that this exception contains for forwarding to.
+	 *
+	 * 返回此异常包含的ModelAndView以进行转发。
 	 */
 	public ModelAndView getModelAndView() {
 		return this.modelAndView;

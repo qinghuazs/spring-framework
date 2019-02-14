@@ -49,8 +49,9 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMappi
 
 /**
  * Creates {@link RequestMappingInfo} instances from type and method-level
- * {@link RequestMapping @RequestMapping} annotations in
- * {@link Controller @Controller} classes.
+ * {@link RequestMapping @RequestMapping} annotations in {@link Controller @Controller} classes.
+ *
+ * 从{@link Controller @Controller}类中的类型和方法级{@link RequestMapping @RequestMapping}注释创建{@link RequestMappingInfo}实例。
  *
  * @author Arjen Poutsma
  * @author Rossen Stoyanchev
@@ -60,16 +61,34 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMappi
 public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMapping
 		implements MatchableHandlerMapping, EmbeddedValueResolverAware {
 
+	/**
+	 * 使用后缀模式匹配
+	 */
 	private boolean useSuffixPatternMatch = true;
 
+	/**
+	 * 使用已注册的后缀模式匹配
+	 */
 	private boolean useRegisteredSuffixPatternMatch = false;
 
+	/**
+	 * 使用Trailing Slash Match
+	 */
 	private boolean useTrailingSlashMatch = true;
 
+	/**
+	 * 路径前缀
+	 */
 	private Map<String, Predicate<Class<?>>> pathPrefixes = new LinkedHashMap<>();
 
+	/**
+	 * 内容谈判管理器
+	 */
 	private ContentNegotiationManager contentNegotiationManager = new ContentNegotiationManager();
 
+	/**
+	 * embedded 嵌入式
+	 */
 	@Nullable
 	private StringValueResolver embeddedValueResolver;
 
@@ -401,6 +420,11 @@ public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMappi
 		}
 	}
 
+	/**
+	 * 解析Cors注解的value
+	 * @param value
+	 * @return
+	 */
 	private String resolveCorsAnnotationValue(String value) {
 		if (this.embeddedValueResolver != null) {
 			String resolved = this.embeddedValueResolver.resolveStringValue(value);

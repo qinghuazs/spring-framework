@@ -333,6 +333,10 @@ public abstract class AbstractHandlerMethodMapping<T> extends AbstractHandlerMap
 
 	/**
 	 * Extract and return the CORS configuration for the mapping.
+	 *
+	 * 提取并返回映射的CORS配置。
+	 *
+	 * CORS 跨域资源共享
 	 */
 	@Nullable
 	protected CorsConfiguration initCorsConfiguration(Object handler, Method method, T mapping) {

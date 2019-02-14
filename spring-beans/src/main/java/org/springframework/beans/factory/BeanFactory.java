@@ -94,6 +94,47 @@ import org.springframework.lang.Nullable;
  * <li>a custom destroy-method definition
  * </ol>
  *
+ * 用于访问Spring bean容器的根接口。
+ *
+ * 这是bean容器的基本客户端视图;诸如{@link ListableBeanFactory}和
+ * {@link org.springframework.beans.factory.config.ConfigurableBeanFactory}之类的其他接口可用于特定目的。
+ *
+ * 此接口由包含许多bean定义的对象实现，每个bean定义由String名称唯一标识。
+ *
+ * 根据bean定义，工厂将返回包含对象的独立实例（Prototype设计模式）或单个共享实例（Singleton设计模式的高级替代，其中实例是范围中的单例工厂）。
+ *
+ * 将返回哪种类型的实例取决于bean工厂配置：API是相同的。从Spring 2.0开始，根据具体的应用程序上下文（例如Web环境中的“请求”和“会话”范围），可以使用更多的范围。
+ *
+ * 这种方法的重点是BeanFactory是应用程序组件的中央注册表，并集中应用程序组件的配置（例如，不再需要单个对象读取属性文件）。有关此方法的优点的讨论，请参见“Expert One-on-One J2EE设计和开发”的第4章和第11章。
+ *
+ * 请注意，通常最好依靠依赖注入（“推送”配置）来通过setter或构造函数来配置应用程序对象，而不是像BeanFactory查找一样使用任何形式的“拉”配置。 Spring的依赖注入功能是使用这个BeanFactory接口及其子接口实现的。
+ *
+ * 通常，BeanFactory将加载存储在配置源（例如XML文档）中的bean定义，并使用org.springframework.beans包来配置bean。但是，实现可以直接在Java代码中直接返回它创建的Java对象。对如何存储定义没有限制：LDAP，RDBMS，XML，属性文件等。鼓励实现支持bean之间的引用（依赖注入）。
+ *
+ * 与ListableBeanFactory中的方法相反，如果这是HierarchicalBeanFactory，则此接口中的所有操作也将检查父工厂。如果在此工厂实例中找不到bean，则会询问直接父工厂。此工厂实例中的Bean应该在任何父工厂中覆盖同名的Bean。
+ *
+ * Bean工厂实现应尽可能支持标准bean生命周期接口。
+ * 完整的初始化方法及其标准顺序是：
+ * 1.BeanNameAware的setBeanName
+ * 2.BeanClassLoaderAware的setBeanClassLoader
+ * 3.BeanFactoryAware的setBeanFactory
+ * 4.EnvironmentAware的setEnvironment
+ * 5.EmbeddedValueResolverAware的setEmbeddedValueResolver
+ * 6.ResourceLoaderAware的setResourceLoader（仅在应用程序上下文中运行时适用）
+ * 7.ApplicationEventPublisherAware的setApplicationEventPublisher（仅在应用程序上下文中运行时适用）
+ * 8.MessageSourceAware的setMessageSource（仅在应用程序上下文中运行时适用）
+ * 9.ApplicationContextAware的setApplicationContext（仅在应用程序上下文中运行时适用）
+ * 10.ServletContextAware的setServletContext（仅在Web应用程序上下文中运行时适用）
+ * 11.postProcessBefore BeanPostProcessors的初始化方法
+ * 12.InitializingBean的afterPropertiesSet
+ * 13.自定义init方法定义
+ * 14.postProcessAfter BeanPostProcessors的初始化方法
+ *
+ * 关闭bean工厂时，以下生命周期方法适用：
+ * 1.DestructionAwareBeanPostProcessors的postProcessBeforeDestruction方法
+ * 2.DisposableBean的destroy方法
+ * 3.自定义销毁方法定义
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Chris Beams

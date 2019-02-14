@@ -1102,18 +1102,22 @@ public class DispatcherServlet extends FrameworkServlet {
 					}
 				}
 
+				//拦截器前置处理方法
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
 
-				// Actually invoke the handler.
+				// 真正的程序处理方法
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
 
 				if (asyncManager.isConcurrentHandlingStarted()) {
 					return;
 				}
 
+				//设置视图的名称
 				applyDefaultViewName(processedRequest, mv);
+
+				//拦截器后置处理方法
 				mappedHandler.applyPostHandle(processedRequest, response, mv);
 			}
 			catch (Exception ex) {
@@ -1122,6 +1126,7 @@ public class DispatcherServlet extends FrameworkServlet {
 			catch (Throwable err) {
 				// As of 4.3, we're processing Errors thrown from handler methods as well,
 				// making them available for @ExceptionHandler methods and other scenarios.
+				// 从4.3开始，我们处理从处理程序方法抛出的错误，使它们可用于 @ExceptionHandler 方法和其他方案。
 				dispatchException = new NestedServletException("Handler dispatch failed", err);
 			}
 			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
@@ -1151,9 +1156,11 @@ public class DispatcherServlet extends FrameworkServlet {
 
 	/**
 	 * Do we need view name translation?
+	 * 我们需要查看名称翻译吗？
 	 */
 	private void applyDefaultViewName(HttpServletRequest request, @Nullable ModelAndView mv) throws Exception {
 		if (mv != null && !mv.hasView()) {
+			//ModelAndView设置视图名称
 			String defaultViewName = getDefaultViewName(request);
 			if (defaultViewName != null) {
 				mv.setViewName(defaultViewName);
@@ -1162,8 +1169,9 @@ public class DispatcherServlet extends FrameworkServlet {
 	}
 
 	/**
-	 * Handle the result of handler selection and handler invocation, which is
-	 * either a ModelAndView or an Exception to be resolved to a ModelAndView.
+	 * Handle the result of handler selection and handler invocation,
+	 * which is either a ModelAndView or an Exception to be resolved to a ModelAndView.
+	 * 处理处理程序选择和处理程序调用的结果，它是要解析为ModelAndView的ModelAndView或Exception。
 	 */
 	private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,
 			@Nullable HandlerExecutionChain mappedHandler, @Nullable ModelAndView mv,
@@ -1355,6 +1363,8 @@ public class DispatcherServlet extends FrameworkServlet {
 
 	/**
 	 * Determine an error ModelAndView via the registered HandlerExceptionResolvers.
+	 * 通过注册的HandlerExceptionResolvers确定错误的ModelAndView。
+	 *
 	 * @param request current HTTP request
 	 * @param response current HTTP response
 	 * @param handler the executed handler, or {@code null} if none chosen at the time of the exception
@@ -1368,9 +1378,10 @@ public class DispatcherServlet extends FrameworkServlet {
 			@Nullable Object handler, Exception ex) throws Exception {
 
 		// Success and error responses may use different content types
+		// 成功和错误响应可能使用不同的内容类型(content-type)
 		request.removeAttribute(HandlerMapping.PRODUCIBLE_MEDIA_TYPES_ATTRIBUTE);
 
-		// Check registered HandlerExceptionResolvers...
+		// 检查注册的HandlerExceptionResolvers...
 		ModelAndView exMv = null;
 		if (this.handlerExceptionResolvers != null) {
 			for (HandlerExceptionResolver resolver : this.handlerExceptionResolvers) {
@@ -1385,7 +1396,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				request.setAttribute(EXCEPTION_ATTRIBUTE, ex);
 				return null;
 			}
-			// We might still need view name translation for a plain error model...
+			// 对于简单的错误模型，我们可能仍需要视图名称转换...
 			if (!exMv.hasView()) {
 				String defaultViewName = getDefaultViewName(request);
 				if (defaultViewName != null) {
@@ -1407,7 +1418,11 @@ public class DispatcherServlet extends FrameworkServlet {
 
 	/**
 	 * Render the given ModelAndView.
+	 * 渲染给定的ModelAndView。
+	 *
 	 * <p>This is the last stage in handling a request. It may involve resolving the view by name.
+	 * 这是处理请求的最后阶段。它可能涉及按名称解析视图
+	 *
 	 * @param mv the ModelAndView to render
 	 * @param request current HTTP servlet request
 	 * @param response current HTTP servlet response
@@ -1459,6 +1474,8 @@ public class DispatcherServlet extends FrameworkServlet {
 
 	/**
 	 * Translate the supplied request into a default view name.
+	 * 将提供的请求转换为默认视图名称。
+	 *
 	 * @param request current HTTP servlet request
 	 * @return the view name (or {@code null} if no default found)
 	 * @throws Exception if view name translation failed
@@ -1540,6 +1557,11 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 	}
 
+	/**
+	 * 获取当前请求的URI
+	 * @param request
+	 * @return
+	 */
 	private static String getRequestUri(HttpServletRequest request) {
 		String uri = (String) request.getAttribute(WebUtils.INCLUDE_REQUEST_URI_ATTRIBUTE);
 		if (uri == null) {

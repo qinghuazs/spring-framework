@@ -25,6 +25,12 @@ package org.springframework.beans.factory;
  * init method, for example in an XML bean definition. For a list of all bean
  * lifecycle methods, see the {@link BeanFactory BeanFactory javadocs}.
  *
+ * 由Bean实现的接口，一旦{@link BeanFactory}设置了所有属性，就需要做出反应：例如 执行自定义初始化，或仅检查是否已设置所有必需属性。
+ *
+ * 实现{@code InitializingBean}的替代方法是指定自定义init方法，例如在XML bean定义中。
+ *
+ * 有关所有bean生命周期方法的列表，请参阅{@link BeanFactory BeanFactory javadocs}。
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see DisposableBean
@@ -38,8 +44,14 @@ public interface InitializingBean {
 	 * and satisfied {@link BeanFactoryAware}, {@code ApplicationContextAware} etc.
 	 * <p>This method allows the bean instance to perform validation of its overall
 	 * configuration and final initialization when all bean properties have been set.
+	 *
+	 * 在设置了所有bean属性并满足{@link BeanFactoryAware}，ApplicationContextAware等之后，由包含BeanFactory调用。
+	 *
+	 * 此方法允许bean实例在设置所有bean属性时执行其整体配置和最终初始化的验证。
+	 *
 	 * @throws Exception in the event of misconfiguration (such as failure to set an
 	 * essential property) or if initialization fails for any other reason
+	 * 					如果配置错误（例如未能设置基本属性）或初始化因任何其他原因而失败
 	 */
 	void afterPropertiesSet() throws Exception;
 

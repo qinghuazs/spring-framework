@@ -24,7 +24,12 @@ import org.springframework.lang.Nullable;
  * implementations in order to expose their singleton management facility
  * in a uniform manner.
  *
+ * 为共享bean实例定义注册表的接口。
+ * 可以通过{@link org.springframework.beans.factory.BeanFactory}的实现类来实现，以便以统一的方式公开其单例管理工具。
+ *
  * <p>The {@link ConfigurableBeanFactory} interface extends this interface.
+ *
+ * {@link ConfigurableBeanFactory}接口扩展了此接口。
  *
  * @author Juergen Hoeller
  * @since 2.0
@@ -49,6 +54,19 @@ public interface SingletonBeanRegistry {
 	 * for runtime registration of singletons. As a consequence, a registry
 	 * implementation should synchronize singleton access; it will have to do
 	 * this anyway if it supports a BeanFactory's lazy initialization of singletons.
+	 *
+	 * 在给定的bean名称下，在bean注册表中将给定的现有对象注册为singleton。
+	 *
+	 * 假定给定的实例已完全初始化; 注册表不会执行任何初始化回调（特别是，它不会调用InitializingBean的afterPropertiesSet方法）。
+	 *
+	 * 给定的实例也不会收到任何销毁回调（如DisposableBean的destroy方法）。
+	 *
+	 * 在完整的BeanFactory中运行时：如果bean应该接收初始化和/或销毁回调，则注册bean定义而不是现有实例。
+	 *
+	 * 通常在注册表配置期间调用，但也可用于单例的运行时注册。
+	 *
+	 * 因此，注册表实现应该同步单例访问; 如果它支持BeanFactory对单例的懒惰初始化，它将无论如何都必须这样做。
+	 *
 	 * @param beanName the name of the bean
 	 * @param singletonObject the existing singleton object
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet
@@ -66,6 +84,17 @@ public interface SingletonBeanRegistry {
 	 * defined by a bean definition that already been created, in a raw fashion.
 	 * <p><b>NOTE:</b> This lookup method is not aware of FactoryBean prefixes or aliases.
 	 * You need to resolve the canonical bean name first before obtaining the singleton instance.
+	 *
+	 * 返回在给定名称下注册的（原始）单例对象。
+	 *
+	 * 只检查已经实例化的单例bean; 不返回尚未实例化的单例bean定义的Object。
+	 *
+	 * 此方法的主要目的是访问手动注册的单例(see {@link #registerSingleton})。 也可以用于以原始方式访问已经创建的bean定义定义的单例。
+	 *
+	 * 注意：此查找方法不知道FactoryBean前缀或别名。
+	 *
+	 * 在获取单例实例之前，需要首先解析规范bean名称。
+	 *
 	 * @param beanName the name of the bean to look for
 	 * @return the registered singleton object, or {@code null} if none found
 	 * @see ConfigurableListableBeanFactory#getBeanDefinition
@@ -89,6 +118,21 @@ public interface SingletonBeanRegistry {
 	 * instance or created by bean definition), also checking ancestor factories.
 	 * <p><b>NOTE:</b> This lookup method is not aware of FactoryBean prefixes or aliases.
 	 * You need to resolve the canonical bean name first before checking the singleton status.
+	 *
+	 * 检查此注册表是否包含具有给定名称的单例实例。
+	 *
+	 * 只检查已经实例化的单例bean; 对于尚未实例化的单例bean定义，它不会返回true。
+	 *
+	 * 此方法的主要目的是检查手动注册的单例(see {@link #registerSingleton})。 也可用于检查是否已创建由bean定义定义的单例。
+	 *
+	 * 要检查bean工厂是否包含具有给定名称的bean定义，请使用ListableBeanFactory的containsBeanDefinition。
+	 *
+	 * 同时调用containsBeanDefinition和containsSingleton会回答特定bean工厂是否包含具有给定名称的本地bean实例。
+	 *
+	 * 使用BeanFactory的containsBean进行常规检查是否工厂知道具有给定名称的bean（无论是手动注册的单例实例还是由bean定义创建），还检查祖先工厂。
+	 *
+	 * 注意：此查找方法不知道FactoryBean前缀或别名。在检查单例状态之前，您需要先解析规范bean名称。
+	 *
 	 * @param beanName the name of the bean to look for
 	 * @return if this bean factory contains a singleton instance with the given name
 	 * @see #registerSingleton
@@ -104,6 +148,15 @@ public interface SingletonBeanRegistry {
 	 * <p>The main purpose of this method is to check manually registered singletons
 	 * (see {@link #registerSingleton}). Can also be used to check which singletons
 	 * defined by a bean definition have already been created.
+	 *
+	 * 返回在此注册表中注册的单例bean的名称。
+	 *
+	 * 只检查已经实例化的单例bean; 不返回尚未实例化的单例bean定义的名称。
+	 *
+	 * 此方法的主要目的是检查手动注册的单例(see {@link #registerSingleton})。
+	 *
+	 * 也可以用于检查已经创建了bean定义定义的单例。
+	 *
 	 * @return the list of names as a String array (never {@code null})
 	 * @see #registerSingleton
 	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry#getBeanDefinitionNames
@@ -118,7 +171,16 @@ public interface SingletonBeanRegistry {
 	 * <p>The main purpose of this method is to check manually registered singletons
 	 * (see {@link #registerSingleton}). Can also be used to count the number of
 	 * singletons defined by a bean definition that have already been created.
-	 * @return the number of singleton beans
+	 *
+	 * 返回在此注册表中注册的单例bean的数量。
+	 *
+	 * 只检查已经实例化的单例bean; 不计算尚未实例化的单例bean定义。
+	 *
+	 * 此方法的主要目的是检查手动注册的单例(see {@link #registerSingleton})。
+	 *
+	 * 也可以用于计算已经创建的bean定义定义的单例数。
+	 *
+	 * @return 返回在此注册表中注册的单例bean的数量。
 	 * @see #registerSingleton
 	 * @see org.springframework.beans.factory.support.BeanDefinitionRegistry#getBeanDefinitionCount
 	 * @see org.springframework.beans.factory.ListableBeanFactory#getBeanDefinitionCount
@@ -126,10 +188,13 @@ public interface SingletonBeanRegistry {
 	int getSingletonCount();
 
 	/**
+	 * mutex 互斥
+	 * 返回此注册表使用的单例互斥锁（适用于外部协作者）。
+	 *
 	 * Return the singleton mutex used by this registry (for external collaborators).
 	 * @return the mutex object (never {@code null})
 	 * @since 4.2
 	 */
-	Object getSingletonMutex();
+	Object getSingletonmutex();
 
 }

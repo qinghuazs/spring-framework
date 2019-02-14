@@ -46,6 +46,9 @@ import org.springframework.util.ResourceUtils;
  */
 public abstract class PropertiesLoaderUtils {
 
+	/**
+	 * xml文件扩展名
+	 */
 	private static final String XML_FILE_EXTENSION = ".xml";
 
 
@@ -112,6 +115,9 @@ public abstract class PropertiesLoaderUtils {
 
 	/**
 	 * Load properties from the given resource (in ISO-8859-1 encoding).
+	 *
+	 * 从给定资源加载属性（采用ISO-8859-1编码）
+	 *
 	 * @param resource the resource to load from
 	 * @return the populated Properties instance
 	 * @throws IOException if loading failed
@@ -125,6 +131,9 @@ public abstract class PropertiesLoaderUtils {
 
 	/**
 	 * Fill the given properties from the given resource (in ISO-8859-1 encoding).
+	 *
+	 * 填充给定资源的给定属性（采用ISO-8859-1编码）
+	 *
 	 * @param props the Properties instance to fill
 	 * @param resource the resource to load from
 	 * @throws IOException if loading failed
@@ -135,8 +144,7 @@ public abstract class PropertiesLoaderUtils {
 			String filename = resource.getFilename();
 			if (filename != null && filename.endsWith(XML_FILE_EXTENSION)) {
 				props.loadFromXML(is);
-			}
-			else {
+			} else {
 				props.load(is);
 			}
 		}

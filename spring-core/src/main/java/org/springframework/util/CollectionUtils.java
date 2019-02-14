@@ -83,6 +83,7 @@ public abstract class CollectionUtils {
 
 	/**
 	 * Merge the given array into the given Collection.
+	 * 将给定数组合并到给定的Collection中
 	 * @param array the array to merge (may be {@code null})
 	 * @param collection the target Collection to merge the array into
 	 */

@@ -80,6 +80,10 @@ public interface HandlerAdapter {
 	/**
 	 * Same contract as for HttpServlet's {@code getLastModified} method.
 	 * Can simply return -1 if there's no support in the handler class.
+	 *
+	 * 与HttpServlet的{@code getLastModified}方法相同的合同。
+	 * 如果处理程序类中没有支持，则可以简单地返回-1。
+	 *
 	 * @param request current HTTP request
 	 * @param handler handler to use
 	 * @return the lastModified value for the given handler

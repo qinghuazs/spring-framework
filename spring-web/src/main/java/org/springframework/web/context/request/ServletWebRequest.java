@@ -42,6 +42,7 @@ import org.springframework.web.util.WebUtils;
 
 /**
  * {@link WebRequest} adapter for an {@link javax.servlet.http.HttpServletRequest}.
+ * 用于{@link javax.servlet.http.HttpServletRequest}的{@link WebRequest}适配器。
  *
  * @author Juergen Hoeller
  * @author Brian Clozel

@@ -26,7 +26,8 @@ import org.springframework.lang.Nullable;
 /**
  * Utility to work with Java 5 generic type parameters.
  * Mainly for internal use within the framework.
- *
+ * 使用Java 5泛型类型参数的实用程序。
+ * 主要供框架内部使用。
  * @author Ramnivas Laddad
  * @author Juergen Hoeller
  * @author Chris Beams

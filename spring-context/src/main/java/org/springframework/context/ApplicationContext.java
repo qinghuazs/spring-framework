@@ -49,6 +49,13 @@ import org.springframework.lang.Nullable;
  * {@link ApplicationContextAware} beans as well as {@link ResourceLoaderAware},
  * {@link ApplicationEventPublisherAware} and {@link MessageSourceAware} beans.
  *
+ *  ApplicationContext建立在BeanFactory之上(Applicationcontext 是 BeanFactory 的子接口)，并增加了其他的功能,
+ *  比如更容易同Spring AOP特性整合， 消息资源处理（用于国际化），事件传递，以声明的方式创建ApplicationContext，
+ *  可选的父上下文和与应用层相关的上下文（比如WebApplicationContext），以及其他方面的增强。
+ *
+ *  简而言之，BeanFactory 提供了配置框架和基本功能，ApplicationContext 添加了更多特定于企业的功能。
+ *  Applicationcontext 是 BeanFactory 的一个完整超集
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @see ConfigurableApplicationContext

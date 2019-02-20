@@ -32,6 +32,8 @@ package org.springframework.core.env;
  * The effect is that an Environment object is 'read-only' until it is being accessed from
  * a ConfigurableApplicationContext, at which point it too may be configured.
  *
+ * 获取组件相关的Environment实例的接口
+ *
  * @author Chris Beams
  * @since 3.1
  * @see Environment
@@ -42,6 +44,7 @@ public interface EnvironmentCapable {
 
 	/**
 	 * Return the {@link Environment} associated with this component.
+	 * 返回与此组件关联的{@link Environment}。
 	 */
 	Environment getEnvironment();
 

@@ -47,8 +47,7 @@ import org.springframework.core.io.Resource;
  * @since 15 April 2001
  * @see org.springframework.beans.factory.support.DefaultListableBeanFactory
  * @see XmlBeanDefinitionReader
- * @deprecated as of Spring 3.1 in favor of {@link DefaultListableBeanFactory} and
- * {@link XmlBeanDefinitionReader}
+ * @deprecated 从Spring 3.1开始，支持{@link DefaultListableBeanFactory}和{@link XmlBeanDefinitionReader}
  */
 @Deprecated
 @SuppressWarnings({"serial", "all"})

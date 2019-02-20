@@ -221,6 +221,7 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 
 	/**
 	 * Overridden to clear the FactoryBean object cache as well.
+	 * 重写以清除FactoryBean对象缓存
 	 */
 	@Override
 	protected void removeSingleton(String beanName) {
@@ -232,6 +233,7 @@ public abstract class FactoryBeanRegistrySupport extends DefaultSingletonBeanReg
 
 	/**
 	 * Overridden to clear the FactoryBean object cache as well.
+	 * 重写以清除FactoryBean对象缓存。
 	 */
 	@Override
 	protected void clearSingletonCache() {

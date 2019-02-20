@@ -38,9 +38,16 @@ import org.springframework.lang.Nullable;
 /**
  * Miscellaneous {@link String} utility methods.
  *
+ * 杂项{@link String}实用程序方法。
+ *
  * <p>Mainly for internal use within the framework; consider
  * <a href="http://commons.apache.org/proper/commons-lang/">Apache's Commons Lang</a>
  * for a more comprehensive suite of {@code String} utilities.
+ *
+ * 主要供框架内部使用
+ *
+ * 参考了<a href="http://commons.apache.org/proper/commons-lang/">Apache's Commons Lang</a>
+ * 用于更全面的{@code String}实用程序套件
  *
  * <p>This class delivers some simple functionality that should really be
  * provided by the core Java {@link String} and {@link StringBuilder}

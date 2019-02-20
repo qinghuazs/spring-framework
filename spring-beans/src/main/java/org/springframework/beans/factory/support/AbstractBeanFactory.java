@@ -163,10 +163,10 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	@Nullable
 	private SecurityContextProvider securityContextProvider;
 
-	/** Map from bean name to merged RootBeanDefinition. */
+	/** Map from bean name to merged RootBeanDefinition.  从bean名称映射到合并的RootBeanDefinition */
 	private final Map<String, RootBeanDefinition> mergedBeanDefinitions = new ConcurrentHashMap<>(256);
 
-	/** Names of beans that have already been created at least once. */
+	/** 已经创建至少一次的bean的名称的集合 */
 	private final Set<String> alreadyCreated = Collections.newSetFromMap(new ConcurrentHashMap<>(256));
 
 	/** Names of beans that are currently in creation. */
@@ -1566,8 +1566,10 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 	/**
 	 * Mark the specified bean as already created (or about to be created).
-	 * <p>This allows the bean factory to optimize its caching for repeated
-	 * creation of the specified bean.
+	 * <p>This allows the bean factory to optimize its caching for repeated creation of the specified bean.
+	 *
+	 * 将指定的bean标记为已创建（或即将创建）。
+	 * 这允许bean工厂优化其缓存以重复创建指定的bean。
 	 * @param beanName the name of the bean
 	 */
 	protected void markBeanAsCreated(String beanName) {
@@ -1585,6 +1587,7 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 
 	/**
 	 * Perform appropriate cleanup of cached metadata after bean creation failed.
+	 * 在bean创建失败后，执行适当的缓存元数据清理。
 	 * @param beanName the name of the bean
 	 */
 	protected void cleanupAfterBeanCreationFailure(String beanName) {
@@ -1623,6 +1626,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 	/**
 	 * Check whether this factory's bean creation phase already started,
 	 * i.e. whether any bean has been marked as created in the meantime.
+	 *
+	 * 检查这个工厂的bean创建阶段是否已经开始
+	 * 比如：在此期间是否已将任何bean标记为已创建
 	 * @since 4.2.2
 	 * @see #markBeanAsCreated
 	 */

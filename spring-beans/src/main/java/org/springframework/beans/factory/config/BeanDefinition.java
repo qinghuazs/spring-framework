@@ -84,6 +84,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 
 	/**
 	 * Set the name of the parent definition of this bean definition, if any.
+	 * 设置此bean定义的父定义的名称（如果有）
 	 */
 	void setParentName(@Nullable String parentName);
 
@@ -97,6 +98,8 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * Specify the bean class name of this bean definition.
 	 * <p>The class name can be modified during bean factory post-processing,
 	 * typically replacing the original class name with a parsed variant of it.
+	 *
+	 * 指定此bean定义的bean类名称。
 	 * @see #setParentName
 	 * @see #setFactoryBeanName
 	 * @see #setFactoryMethodName

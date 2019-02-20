@@ -1016,6 +1016,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 	/**
 	 * Only allows alias overriding if bean definition overriding is allowed.
+	 * 如果允许bean定义覆盖，则仅允许别名覆盖。
 	 */
 	@Override
 	protected boolean allowAliasOverriding() {
@@ -1038,7 +1039,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			}
 		}
 		else {
-			// Still in startup registration phase
+			// Still in startup registration phase 仍在启动注册阶段
 			if (!this.beanDefinitionMap.containsKey(beanName)) {
 				this.manualSingletonNames.add(beanName);
 			}

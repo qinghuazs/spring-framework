@@ -24,6 +24,8 @@ import org.xml.sax.InputSource;
 /**
  * Strategy interface for loading an XML {@link Document}.
  *
+ * 用于加载XML的策略接口{@link Document},将XML的配置文件转换为Document对象
+ *
  * @author Rob Harrop
  * @since 2.0
  * @see DefaultDocumentLoader

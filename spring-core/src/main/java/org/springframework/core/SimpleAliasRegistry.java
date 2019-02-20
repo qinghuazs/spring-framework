@@ -35,15 +35,21 @@ import org.springframework.util.StringValueResolver;
  * {@link org.springframework.beans.factory.support.BeanDefinitionRegistry}
  * implementations.
  *
+ * {@link AliasRegistry}接口的简单实现
+ *
+ * 用作{@link org.springframework.beans.factory.support.BeanDefinitionRegistry}实现的基类。
+ *
+ *
+ *
  * @author Juergen Hoeller
  * @since 2.5.2
  */
 public class SimpleAliasRegistry implements AliasRegistry {
 
-	/** Logger available to subclasses. */
+	/** 日志记录类，可用于子类 */
 	protected final Log logger = LogFactory.getLog(getClass());
 
-	/** Map from alias to canonical name. */
+	/** Map from alias to canonical name. 从别名到规范名称的Map集合  key: 别名 value:bean的名称 */
 	private final Map<String, String> aliasMap = new ConcurrentHashMap<>(16);
 
 
@@ -52,6 +58,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 		Assert.hasText(name, "'name' must not be empty");
 		Assert.hasText(alias, "'alias' must not be empty");
 		synchronized (this.aliasMap) {
+			//别名和bean名称相同的话，移除别名信息
 			if (alias.equals(name)) {
 				this.aliasMap.remove(alias);
 				if (logger.isDebugEnabled()) {
@@ -59,22 +66,27 @@ public class SimpleAliasRegistry implements AliasRegistry {
 				}
 			}
 			else {
+				//别名是否已存在
 				String registeredName = this.aliasMap.get(alias);
 				if (registeredName != null) {
 					if (registeredName.equals(name)) {
-						// An existing alias - no need to re-register
+						// 现有别名 - 无需重新注册
 						return;
 					}
+					//不允许别名覆盖，则抛出异常，声明别名已存在
 					if (!allowAliasOverriding()) {
 						throw new IllegalStateException("Cannot define alias '" + alias + "' for name '" +
 								name + "': It is already registered for name '" + registeredName + "'.");
 					}
+					//日志记录
 					if (logger.isDebugEnabled()) {
 						logger.debug("Overriding alias '" + alias + "' definition for registered name '" +
 								registeredName + "' with new target name '" + name + "'");
 					}
 				}
+				//检查给定名称是否已指向另一个方向的别名作为别名
 				checkForAliasCircle(name, alias);
+				//注册别名
 				this.aliasMap.put(alias, name);
 				if (logger.isTraceEnabled()) {
 					logger.trace("Alias definition '" + alias + "' registered for name '" + name + "'");
@@ -86,6 +98,9 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	/**
 	 * Return whether alias overriding is allowed.
 	 * Default is {@code true}.
+	 *
+	 * 返回是否允许别名覆盖。
+	 * 默认为{@code true}
 	 */
 	protected boolean allowAliasOverriding() {
 		return true;
@@ -93,6 +108,9 @@ public class SimpleAliasRegistry implements AliasRegistry {
 
 	/**
 	 * Determine whether the given name has the given alias registered.
+	 *
+	 * 确定给定名称是否已注册给定的别名(已有其他的别名)
+	 *
 	 * @param name the name to check
 	 * @param alias the alias to look for
 	 * @since 4.2.1
@@ -102,6 +120,10 @@ public class SimpleAliasRegistry implements AliasRegistry {
 			String registeredName = entry.getValue();
 			if (registeredName.equals(name)) {
 				String registeredAlias = entry.getKey();
+				//hasAlias(registeredAlias, alias) 这个是基于什么考虑的？
+				// 考虑别名的别名  别名也可能有别名
+				// <alias name="fromName" alias="toName"/>
+				// fromName的别名为toName
 				if (registeredAlias.equals(alias) || hasAlias(registeredAlias, alias)) {
 					return true;
 				}
@@ -136,6 +158,9 @@ public class SimpleAliasRegistry implements AliasRegistry {
 
 	/**
 	 * Transitively retrieve all aliases for the given name.
+	 *
+	 * 传递性地检索给定名称的所有别名。
+	 *
 	 * @param name the target name to find aliases for
 	 * @param result the resulting aliases list
 	 */
@@ -153,6 +178,10 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	 * factory, applying the given StringValueResolver to them.
 	 * <p>The value resolver may for example resolve placeholders
 	 * in target bean names and even in alias names.
+	 *
+	 * 解析在此工厂中注册的所有别名的目标名称和别名，并将给定的StringValueResolver应用于它们。
+	 * 例如，值解析器可以解析目标bean名称中的占位符，甚至可以解析别名中的占位符。
+	 *
 	 * @param valueResolver the StringValueResolver to apply
 	 */
 	public void resolveAliases(StringValueResolver valueResolver) {
@@ -193,6 +222,9 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	 * Check whether the given name points back to the given alias as an alias
 	 * in the other direction already, catching a circular reference upfront
 	 * and throwing a corresponding IllegalStateException.
+	 *
+	 * 检查给定名称是否已指向另一个方向的别名作为别名，预先捕获循环引用并抛出相应的IllegalStateException。
+	 *
 	 * @param name the candidate name
 	 * @param alias the candidate alias
 	 * @see #registerAlias
@@ -200,6 +232,7 @@ public class SimpleAliasRegistry implements AliasRegistry {
 	 */
 	protected void checkForAliasCircle(String name, String alias) {
 		if (hasAlias(alias, name)) {
+			//indirect 间接的
 			throw new IllegalStateException("Cannot register alias '" + alias +
 					"' for name '" + name + "': Circular reference - '" +
 					name + "' is a direct or indirect alias for '" + alias + "' already");
@@ -208,14 +241,18 @@ public class SimpleAliasRegistry implements AliasRegistry {
 
 	/**
 	 * Determine the raw name, resolving aliases to canonical names.
-	 * @param name the user-specified name
-	 * @return the transformed name
+	 *
+	 * 确定原始名称，将别名解析为规范名称。
+	 *
+	 * @param name 用户指定的名称
+	 * @return 规范的bean名称
 	 */
 	public String canonicalName(String name) {
 		String canonicalName = name;
 		// Handle aliasing...
 		String resolvedName;
 		do {
+			//从Map中获取bean名称
 			resolvedName = this.aliasMap.get(canonicalName);
 			if (resolvedName != null) {
 				canonicalName = resolvedName;

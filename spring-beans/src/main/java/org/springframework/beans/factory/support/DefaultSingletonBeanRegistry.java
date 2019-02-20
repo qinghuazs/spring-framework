@@ -616,4 +616,5 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 		return this.singletonObjects;
 	}
 
+
 }

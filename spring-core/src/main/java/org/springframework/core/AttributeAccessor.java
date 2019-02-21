@@ -22,25 +22,28 @@ import org.springframework.lang.Nullable;
  * Interface defining a generic contract for attaching and accessing metadata
  * to/from arbitrary objects.
  *
+ * AttributeAccessor接口定义了最基本的对任意对象的元数据的修改或者获取
+ *
  * @author Rob Harrop
  * @since 2.0
  */
 public interface AttributeAccessor {
 
 	/**
-	 * Set the attribute defined by {@code name} to the supplied {@code value}.
-	 * If {@code value} is {@code null}, the attribute is {@link #removeAttribute removed}.
-	 * <p>In general, users should take care to prevent overlaps with other
-	 * metadata attributes by using fully-qualified names, perhaps using
-	 * class or package names as prefix.
+	 *
+	 *  将name定义的属性设置为提供的值。 如果value为null，则删除该属性。
+	 *
+	 * 通常，用户应注意通过使用完全限定名称来防止与其他元数据属性重叠，可能使用类或包名称作为前缀。
+	 *
 	 * @param name the unique attribute key
 	 * @param value the attribute value to be attached
 	 */
 	void setAttribute(String name, @Nullable Object value);
 
 	/**
-	 * Get the value of the attribute identified by {@code name}.
-	 * Return {@code null} if the attribute doesn't exist.
+	 *
+	 * 获取由name标识的属性的值。 如果该属性不存在，则返回null。
+	 *
 	 * @param name the unique attribute key
 	 * @return the current value of the attribute, if any
 	 */
@@ -48,8 +51,9 @@ public interface AttributeAccessor {
 	Object getAttribute(String name);
 
 	/**
-	 * Remove the attribute identified by {@code name} and return its value.
-	 * Return {@code null} if no attribute under {@code name} is found.
+	 *
+	 * 删除由name标识的属性并返回其值。 如果找不到名称下的属性，则返回null。
+	 *
 	 * @param name the unique attribute key
 	 * @return the last value of the attribute, if any
 	 */
@@ -57,14 +61,13 @@ public interface AttributeAccessor {
 	Object removeAttribute(String name);
 
 	/**
-	 * Return {@code true} if the attribute identified by {@code name} exists.
-	 * Otherwise return {@code false}.
+	 * 如果名称标识的属性存在，则返回true。 否则返回false。
 	 * @param name the unique attribute key
 	 */
 	boolean hasAttribute(String name);
 
 	/**
-	 * Return the names of all attributes.
+	 * 返回所有属性的名称。
 	 */
 	String[] attributeNames();
 

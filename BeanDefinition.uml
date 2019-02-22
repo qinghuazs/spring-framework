@@ -5,24 +5,50 @@
   <nodes>
     <node x="170.0" y="0.0">org.springframework.beans.BeanMetadataElement</node>
     <node x="0.0" y="0.0">org.springframework.core.AttributeAccessor</node>
-    <node x="101.25" y="81.0">org.springframework.beans.factory.config.BeanDefinition</node>
+    <node x="219.375" y="162.0">org.springframework.beans.factory.annotation.AnnotatedBeanDefinition</node>
+    <node x="216.37500000000003" y="81.0">org.springframework.beans.factory.config.BeanDefinition</node>
+    <node x="19.37500000000003" y="162.0">org.springframework.beans.factory.support.AbstractBeanDefinition</node>
   </nodes>
   <notes />
   <edges>
+    <edge source="org.springframework.beans.factory.support.AbstractBeanDefinition" target="org.springframework.beans.factory.config.BeanDefinition">
+      <point x="60.0" y="-15.5" />
+      <point x="169.37500000000003" y="137.0" />
+      <point x="249.37500000000003" y="137.0" />
+      <point x="-33.0" y="15.5" />
+    </edge>
     <edge source="org.springframework.beans.factory.config.BeanDefinition" target="org.springframework.core.AttributeAccessor">
       <point x="-33.0" y="-15.5" />
-      <point x="134.25" y="56.0" />
-      <point x="75.0" y="56.0" />
-      <point x="0.0" y="15.5" />
+      <point x="249.37500000000003" y="51.0" />
+      <point x="112.5" y="51.0" />
+      <point x="37.5" y="15.5" />
+    </edge>
+    <edge source="org.springframework.beans.factory.support.AbstractBeanDefinition" target="org.springframework.core.AttributeAccessor">
+      <point x="-60.0" y="-15.5" />
+      <point x="49.37500000000003" y="137.0" />
+      <point x="37.5" y="137.0" />
+      <point x="-37.5" y="15.5" />
+    </edge>
+    <edge source="org.springframework.beans.factory.annotation.AnnotatedBeanDefinition" target="org.springframework.beans.factory.config.BeanDefinition">
+      <point x="0.0" y="-15.5" />
+      <point x="33.0" y="15.5" />
+    </edge>
+    <edge source="org.springframework.beans.factory.support.AbstractBeanDefinition" target="org.springframework.beans.BeanMetadataElement">
+      <point x="0.0" y="-15.5" />
+      <point x="109.37500000000003" y="137.0" />
+      <point x="134.33928571428572" y="137.0" />
+      <point x="134.33928571428572" y="61.0" />
+      <point x="214.75" y="61.0" />
+      <point x="-44.75" y="15.5" />
     </edge>
     <edge source="org.springframework.beans.factory.config.BeanDefinition" target="org.springframework.beans.BeanMetadataElement">
       <point x="33.0" y="-15.5" />
-      <point x="200.25" y="56.0" />
-      <point x="259.5" y="56.0" />
-      <point x="0.0" y="15.5" />
+      <point x="315.375" y="61.0" />
+      <point x="304.25" y="61.0" />
+      <point x="44.75" y="15.5" />
     </edge>
   </edges>
-  <settings layout="Hierarchic Group" zoom="1.0" x="174.5" y="56.0" />
+  <settings layout="Hierarchic Group" zoom="1.0" x="206.0" y="96.5" />
   <SelectedNodes />
   <Categories />
   <SCOPE>All</SCOPE>

@@ -46,6 +46,10 @@ import org.springframework.util.StringUtils;
  * {@link org.springframework.beans.factory.config.AutowireCapableBeanFactory}
  * interface.
  *
+ * 具体的，完善的{@link BeanDefinition}类的基类，分解{@link GenericBeanDefinition}，{@link RootBeanDefinition}和{@link ChildBeanDefinition}的公共属性。
+ *
+ * autowire常量与{@link org.springframework.beans.factory.config.AutowireCapableBeanFactory}接口中定义的常量匹配。
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Rob Harrop

@@ -36,6 +36,8 @@ import org.springframework.util.StringUtils;
  * Allows simple manipulation of properties, and provides constructors
  * to support deep copy and construction from a Map.
  *
+ * Mutable 易变的
+ *
  * @author Rod Johnson
  * @author Juergen Hoeller
  * @author Rob Harrop

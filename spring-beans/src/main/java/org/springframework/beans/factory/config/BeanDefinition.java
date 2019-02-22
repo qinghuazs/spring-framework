@@ -71,6 +71,7 @@ public interface BeanDefinition extends AttributeAccessor, BeanMetadataElement {
 	 * of the application. Typically corresponds to a user-defined bean.
 	 *
 	 * 角色提示，指示{@code BeanDefinition}是应用程序的主要部分。
+	 *
 	 * 通常对应于用户定义的bean。
 	 *
 	 */

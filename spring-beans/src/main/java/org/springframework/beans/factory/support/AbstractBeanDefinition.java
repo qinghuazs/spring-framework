@@ -46,9 +46,9 @@ import org.springframework.util.StringUtils;
  * {@link org.springframework.beans.factory.config.AutowireCapableBeanFactory}
  * interface.
  *
- * 具体的，完善的{@link BeanDefinition}类的基类，分解{@link GenericBeanDefinition}，{@link RootBeanDefinition}和{@link ChildBeanDefinition}的公共属性。
+ * 具体的，完善的{@link BeanDefinition}类的基类，声明了{@link GenericBeanDefinition}，{@link RootBeanDefinition}和{@link ChildBeanDefinition}的公共属性。
  *
- * autowire常量与{@link org.springframework.beans.factory.config.AutowireCapableBeanFactory}接口中定义的常量匹配。
+ * 自动装配(autowire)的常量与{@link org.springframework.beans.factory.config.AutowireCapableBeanFactory}接口中定义的常量匹配。
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -65,36 +65,49 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Constant for the default scope name: {@code ""}, equivalent to singleton
 	 * status unless overridden from a parent bean definition (if applicable).
+	 *
+	 * 默认范围名称的常量：“”，等同于单例状态，除非从父bean定义（如果适用）覆盖。
 	 */
 	public static final String SCOPE_DEFAULT = "";
 
 	/**
 	 * Constant that indicates no autowiring at all.
+	 *
+	 * 常量，表示根本没有自动装配。
+	 *
 	 * @see #setAutowireMode
 	 */
 	public static final int AUTOWIRE_NO = AutowireCapableBeanFactory.AUTOWIRE_NO;
 
 	/**
 	 * Constant that indicates autowiring bean properties by name.
+	 *
+	 * 常量，表示按名称自动装配bean属性。
 	 * @see #setAutowireMode
 	 */
 	public static final int AUTOWIRE_BY_NAME = AutowireCapableBeanFactory.AUTOWIRE_BY_NAME;
 
 	/**
 	 * Constant that indicates autowiring bean properties by type.
+	 *
+	 * 常量，表示按类型自动装配bean属性。
 	 * @see #setAutowireMode
 	 */
 	public static final int AUTOWIRE_BY_TYPE = AutowireCapableBeanFactory.AUTOWIRE_BY_TYPE;
 
 	/**
 	 * Constant that indicates autowiring a constructor.
+	 *
+	 * 常量，指示自动装配构造函数。
 	 * @see #setAutowireMode
 	 */
 	public static final int AUTOWIRE_CONSTRUCTOR = AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR;
 
 	/**
-	 * Constant that indicates determining an appropriate autowire strategy
-	 * through introspection of the bean class.
+	 * Constant that indicates determining an appropriate autowire strategy through introspection of the bean class.
+	 *
+	 * 常量，表示通过内省bean类确定适当的自动线路策略。
+	 *
 	 * @see #setAutowireMode
 	 * @deprecated as of Spring 3.0: If you are using mixed autowiring strategies,
 	 * use annotation-based autowiring for clearer demarcation of autowiring needs.
@@ -104,18 +117,24 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Constant that indicates no dependency check at all.
+	 *
+	 * 常量，表示根本没有依赖性检查。
 	 * @see #setDependencyCheck
 	 */
 	public static final int DEPENDENCY_CHECK_NONE = 0;
 
 	/**
 	 * Constant that indicates dependency checking for object references.
+	 *
+	 * 指示对象引用的依赖性检查的常量。
 	 * @see #setDependencyCheck
 	 */
 	public static final int DEPENDENCY_CHECK_OBJECTS = 1;
 
 	/**
 	 * Constant that indicates dependency checking for "simple" properties.
+	 *
+	 * 常量，表示对“简单”属性的依赖性检查。
 	 * @see #setDependencyCheck
 	 * @see org.springframework.beans.BeanUtils#isSimpleProperty
 	 */
@@ -124,6 +143,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Constant that indicates dependency checking for all properties
 	 * (object references as well as "simple" properties).
+	 *
+	 * 指示所有属性（对象引用以及“简单”属性）的依赖性检查的常量。
 	 * @see #setDependencyCheck
 	 */
 	public static final int DEPENDENCY_CHECK_ALL = 3;
@@ -137,6 +158,12 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	 * name.
 	 * <p>Currently, the method names detected during destroy method inference
 	 * are "close" and "shutdown", if present on the specific bean class.
+	 *
+	 * 指示容器应该尝试推断bean的destroy方法名称而不是显式指定方法名称的常量。
+	 *
+	 * 值 {@value} 专门设计为包含方法名称中非法的字符，确保不会与具有相同名称的合法命名方法发生冲突。
+	 *
+	 * 目前，在destroy方法推断期间检测到的方法名称是“close”和“shutdown”，如果存在于特定bean类中。
 	 */
 	public static final String INFER_METHOD = "(inferred)";
 
@@ -158,17 +185,29 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private String[] dependsOn;
 
+	/**
+	 *  Candidate 候选人
+	 */
 	private boolean autowireCandidate = true;
 
 	private boolean primary = false;
 
+	/**
+	 * Qualifier 预选赛
+	 */
 	private final Map<String, AutowireCandidateQualifier> qualifiers = new LinkedHashMap<>();
 
+	/**
+	 * Supplier 提供者
+	 */
 	@Nullable
 	private Supplier<?> instanceSupplier;
 
 	private boolean nonPublicAccessAllowed = true;
 
+	/**
+	 * lenient 宽容
+	 */
 	private boolean lenientConstructorResolution = true;
 
 	@Nullable
@@ -192,10 +231,16 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	@Nullable
 	private String destroyMethodName;
 
+	/**
+	 * enforce 执行
+	 */
 	private boolean enforceInitMethod = true;
 
 	private boolean enforceDestroyMethod = true;
 
+	/**
+	 * synthetic 合成的
+	 */
 	private boolean synthetic = false;
 
 	private int role = BeanDefinition.ROLE_APPLICATION;
@@ -209,6 +254,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Create a new AbstractBeanDefinition with default settings.
+	 *
+	 * 使用默认设置创建新的AbstractBeanDefinition。
 	 */
 	protected AbstractBeanDefinition() {
 		this(null, null);
@@ -224,8 +271,10 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
-	 * Create a new AbstractBeanDefinition as a deep copy of the given
-	 * bean definition.
+	 * Create a new AbstractBeanDefinition as a deep copy of the given bean definition.
+	 *
+	 * 创建一个新的AbstractBeanDefinition作为给定bean定义的深层副本。
+	 *
 	 * @param original the original bean definition to copy from
 	 */
 	protected AbstractBeanDefinition(BeanDefinition original) {
@@ -356,6 +405,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Apply the provided default values to this bean.
+	 *
+	 * 将提供的默认值应用于此bean。
 	 * @param defaults the defaults to apply
 	 */
 	public void applyDefaults(BeanDefinitionDefaults defaults) {
@@ -371,6 +422,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Specify the bean class name of this bean definition.
+	 *
+	 * 指定此bean定义的bean类名称。
 	 */
 	@Override
 	public void setBeanClassName(@Nullable String beanClassName) {
@@ -379,6 +432,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return the current bean class name of this bean definition.
+	 *
+	 * 返回此bean定义的当前bean类名。
 	 */
 	@Override
 	@Nullable
@@ -393,7 +448,7 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	}
 
 	/**
-	 * Specify the class for this bean.
+	 * 指定此bean的class屬性。
 	 */
 	public void setBeanClass(@Nullable Class<?> beanClass) {
 		this.beanClass = beanClass;
@@ -833,9 +888,12 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return property values for this bean (never {@code null}).
+	 *
+	 * 返回当前bean的属性的值（永远不会为null）
 	 */
 	@Override
 	public MutablePropertyValues getPropertyValues() {
+		//非null的保证
 		if (this.propertyValues == null) {
 			this.propertyValues = new MutablePropertyValues();
 		}
@@ -872,6 +930,9 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return if there are method overrides defined for this bean.
+	 *
+	 * 如果为此bean定义了方法覆盖，则返回true。
+	 *
 	 * @since 5.0.2
 	 */
 	public boolean hasMethodOverrides() {
@@ -881,6 +942,10 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 	/**
 	 * Set the name of the initializer method.
 	 * <p>The default is {@code null} in which case there is no initializer method.
+	 *
+	 * 设置初始化方法的名称。
+	 *
+	 * 默认值为null，防止bean没有初始化方法
 	 */
 	@Override
 	public void setInitMethodName(@Nullable String initMethodName) {
@@ -889,6 +954,8 @@ public abstract class AbstractBeanDefinition extends BeanMetadataAttributeAccess
 
 	/**
 	 * Return the name of the initializer method.
+	 *
+	 * 返回初始化方法的名称
 	 */
 	@Override
 	@Nullable

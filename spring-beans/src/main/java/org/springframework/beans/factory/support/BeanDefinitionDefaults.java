@@ -22,6 +22,10 @@ import org.springframework.util.StringUtils;
 /**
  * A simple holder for {@code BeanDefinition} property defaults.
  *
+ * {@code BeanDefinition}属性的简单持有者默认值
+ *
+ * 定义一个BeanDefinition的默认值
+ *
  * @author Mark Fisher
  * @since 2.5
  */
@@ -39,6 +43,7 @@ public class BeanDefinitionDefaults {
 	@Nullable
 	private String destroyMethodName;
 
+	//get set方法
 
 	public void setLazyInit(boolean lazyInit) {
 		this.lazyInit = lazyInit;

@@ -46,10 +46,10 @@ import org.springframework.util.ReflectionUtils;
  */
 public class Constants {
 
-	/** The name of the introspected class. */
+	/** 内省类的名称. */
 	private final String className;
 
-	/** Map from String field name to object value. */
+	/** 从String字段名称映射到对象值。 */
 	private final Map<String, Object> fieldCache = new HashMap<>();
 
 
@@ -79,14 +79,14 @@ public class Constants {
 
 
 	/**
-	 * Return the name of the analyzed class.
+	 * 返回已分析类的名称。
 	 */
 	public final String getClassName() {
 		return this.className;
 	}
 
 	/**
-	 * Return the number of constants exposed.
+	 * 返回暴露的常量数。
 	 */
 	public final int getSize() {
 		return this.fieldCache.size();

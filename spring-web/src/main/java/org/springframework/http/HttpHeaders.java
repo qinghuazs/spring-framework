@@ -52,8 +52,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 
 /**
- * A data structure representing HTTP request or response headers, mapping String header names
- * to a list of String values, also offering accessors for common application-level data types.
+ * 表示HTTP请求或响应标头的数据结构，将字符串标头名称映射到字符串值列表，还提供通用应用程序级数据类型的访问器。
  *
  * <p>In addition to the regular methods defined by {@link Map}, this class offers many common
  * convenience methods, for example:

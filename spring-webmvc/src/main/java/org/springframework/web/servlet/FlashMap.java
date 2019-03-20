@@ -89,9 +89,9 @@ public final class FlashMap extends HashMap<String, Object> implements Comparabl
 	}
 
 	/**
-	 * Provide a request parameter identifying the request for this FlashMap.
-	 * @param name the expected parameter name (skipped if empty)
-	 * @param value the expected value (skipped if empty)
+	 * 提供一个请求参数，用于标识此FlashMap的请求。
+	 * @param name 预期的参数名称(如果为空则跳过)
+	 * @param value 期望值(如果为空则跳过)
 	 */
 	public FlashMap addTargetRequestParam(String name, String value) {
 		if (StringUtils.hasText(name) && StringUtils.hasText(value)) {
@@ -101,15 +101,15 @@ public final class FlashMap extends HashMap<String, Object> implements Comparabl
 	}
 
 	/**
-	 * Return the parameters identifying the target request, or an empty map.
+	 * 返回标识目标请求的参数或空映射。
 	 */
 	public MultiValueMap<String, String> getTargetRequestParams() {
 		return this.targetRequestParams;
 	}
 
 	/**
-	 * Start the expiration period for this instance.
-	 * @param timeToLive the number of seconds before expiration
+	 * 启动此实例的过期期。
+	 * @param timeToLive 过期前的秒数
 	 */
 	public void startExpirationPeriod(int timeToLive) {
 		this.expirationTime = System.currentTimeMillis() + timeToLive * 1000;

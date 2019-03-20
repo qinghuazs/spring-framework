@@ -58,16 +58,15 @@ public final class FlashMap extends HashMap<String, Object> implements Comparabl
 
 
 	/**
-	 * Provide a URL path to help identify the target request for this FlashMap.
-	 * <p>The path may be absolute (e.g. "/application/resource") or relative to the
-	 * current request (e.g. "../resource").
+	 * 提供URL路径，以帮助识别此FlashMap的目标请求。
+	 * 路径可能是绝对的。“/application/resource”)或相对于当前请求(例如:“../resource”)。
 	 */
 	public void setTargetRequestPath(@Nullable String path) {
 		this.targetRequestPath = path;
 	}
 
 	/**
-	 * Return the target URL path (or {@code null} if none specified).
+	 * 返回目标URL路径(如果没有指定，则返回{@code null})。
 	 */
 	@Nullable
 	public String getTargetRequestPath() {
@@ -75,8 +74,8 @@ public final class FlashMap extends HashMap<String, Object> implements Comparabl
 	}
 
 	/**
-	 * Provide request parameters identifying the request for this FlashMap.
-	 * @param params a Map with the names and values of expected parameters
+	 * 提供用于标识此FlashMap的请求的请求参数。
+	 * @param params 包含预期参数的名称和值的映射
 	 */
 	public FlashMap addTargetRequestParams(@Nullable MultiValueMap<String, String> params) {
 		if (params != null) {

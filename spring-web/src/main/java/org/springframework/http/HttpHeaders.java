@@ -76,7 +76,7 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 
 
 	/**
-	 * The HTTP {@code Accept} header field name.
+	 * HTTP {@code Accept}头字段名。
 	 * @see <a href="http://tools.ietf.org/html/rfc7231#section-5.3.2">Section 5.3.2 of RFC 7231</a>
 	 */
 	public static final String ACCEPT = "Accept";
@@ -141,7 +141,7 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 	 */
 	public static final String ACCESS_CONTROL_REQUEST_METHOD = "Access-Control-Request-Method";
 	/**
-	 * The HTTP {@code Age} header field name.
+	 * HTTP {@code Age}头字段名。
 	 * @see <a href="http://tools.ietf.org/html/rfc7234#section-5.1">Section 5.1 of RFC 7234</a>
 	 */
 	public static final String AGE = "Age";
@@ -394,7 +394,7 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 	private static final ZoneId GMT = ZoneId.of("GMT");
 
 	/**
-	 * Date formats with time zone as specified in the HTTP RFC.
+	 * 使用HTTP RFC中指定的时区的日期格式。
 	 * @see <a href="https://tools.ietf.org/html/rfc7231#section-7.1.1.1">Section 7.1.1.1 of RFC 7231</a>
 	 */
 	private static final DateTimeFormatter[] DATE_FORMATTERS = new DateTimeFormatter[] {
@@ -408,7 +408,7 @@ public class HttpHeaders implements MultiValueMap<String, String>, Serializable 
 
 
 	/**
-	 * Construct a new, empty instance of the {@code HttpHeaders} object.
+	 * 构造一个新的空的{@code HttpHeaders}对象实例。
 	 */
 	public HttpHeaders() {
 		this(CollectionUtils.toMultiValueMap(new LinkedCaseInsensitiveMap<>(8, Locale.ENGLISH)));

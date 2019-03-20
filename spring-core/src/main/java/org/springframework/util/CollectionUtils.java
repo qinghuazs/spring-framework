@@ -34,8 +34,8 @@ import java.util.SortedSet;
 import org.springframework.lang.Nullable;
 
 /**
- * Miscellaneous collection utility methods.
- * Mainly for internal use within the framework.
+ * 集合实用方法。
+ * 主要用于框架内部使用。
  *
  * @author Juergen Hoeller
  * @author Rob Harrop
@@ -45,8 +45,8 @@ import org.springframework.lang.Nullable;
 public abstract class CollectionUtils {
 
 	/**
-	 * Return {@code true} if the supplied Collection is {@code null} or empty.
-	 * Otherwise, return {@code false}.
+	 * 如果提供的集合是{@code null}或空，则返回{@code true}。
+	 * 否则，返回{@code false}。
 	 * @param collection the Collection to check
 	 * @return whether the given Collection is empty
 	 */
